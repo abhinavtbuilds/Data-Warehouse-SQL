@@ -30,7 +30,7 @@ Data-Warehouse-SQL/
 
 ## 🛠️ Tools
 
-- SQL (specify your engine — e.g. SQL Server, PostgreSQL, MySQL)
+- SQL Server (T-SQL)
 - Git / GitHub for version control
 
 ## 📖 Getting Started
@@ -39,9 +39,32 @@ Data-Warehouse-SQL/
 ```bash
    git clone https://github.com/abhinavtbuilds/Data-Warehouse-SQL.git
 ```
-2. Load the raw files from `datasets/` into your database.
-3. Run the scripts in `scripts/` in order (bronze → silver → gold) to build out each layer.
+2. Edit the `BULK INSERT` paths in `scripts/bronze/proc_load_bronze.sql` (they start with `/sql/datasets/`) so they point to the `datasets/` folder on your SQL Server host.
+3. Run the scripts in this exact order:
+
+   | Step | Script |
+   |------|--------|
+   | 1 | `scripts/init_database.sql` |
+   | 2 | `scripts/bronze/ddl_bronze.sql` |
+   | 3 | `scripts/bronze/proc_load_bronze.sql` |
+   | 4 | `scripts/silver/ddl_silver.sql` |
+   | 5 | `scripts/silver/proc_load_silver.sql` |
+   | 6 | `scripts/gold/ddl_gold.sql` |
+
 4. Check `docs/` for the data catalog and schema details.
+
+## 📊 Source Data
+
+Row counts of the raw CSV files in `datasets/` (excluding the header row):
+
+| File | Source system | Rows |
+|------|---------------|------|
+| `source_crm/cust_info.csv` | CRM | 18,494 |
+| `source_crm/prd_info.csv` | CRM | 397 |
+| `source_crm/sales_details.csv` | CRM | 60,398 |
+| `source_erp/CUST_AZ12.csv` | ERP | 18,484 |
+| `source_erp/LOC_A101.csv` | ERP | 18,484 |
+| `source_erp/PX_CAT_G1V2.csv` | ERP | 37 |
 
 ## 📄 License
 

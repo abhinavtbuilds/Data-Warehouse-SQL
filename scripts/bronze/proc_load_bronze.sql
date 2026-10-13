@@ -14,6 +14,13 @@ Parameters:
 
 Usage Example:
     EXEC bronze.load_bronze;
+
+NOTE:
+    The BULK INSERT paths below start with '/sql/datasets/'. This is an
+    environment-specific location (the path as seen by the SQL Server
+    instance), so you must edit it to point at wherever the files in this
+    repo's datasets/ folder live on your SQL Server host. The folder and
+    file names (including upper/lower case) match the files in datasets/.
 ===============================================================================
 */
 
@@ -88,7 +95,7 @@ BEGIN
 		TRUNCATE TABLE bronze.erp_loc_a101;
 		PRINT '>> Inserting Data Into: bronze.erp_loc_a101';
 		BULK INSERT bronze.erp_loc_a101
-		FROM '/sql/datasets/source_erp/loc_a101.csv'
+		FROM '/sql/datasets/source_erp/LOC_A101.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -104,7 +111,7 @@ BEGIN
 		TRUNCATE TABLE bronze.erp_cust_az12;
 		PRINT '>> Inserting Data Into: bronze.erp_cust_az12';
 		BULK INSERT bronze.erp_cust_az12
-		FROM '/sql/datasets/source_erp/cust_az12.csv'
+		FROM '/sql/datasets/source_erp/CUST_AZ12.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -120,7 +127,7 @@ BEGIN
 		TRUNCATE TABLE bronze.erp_px_cat_g1v2;
 		PRINT '>> Inserting Data Into: bronze.erp_px_cat_g1v2';
 		BULK INSERT bronze.erp_px_cat_g1v2
-		FROM '/sql/datasets/source_erp/px_cat_g1v2.csv'
+		FROM '/sql/datasets/source_erp/PX_CAT_G1V2.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -146,6 +153,7 @@ BEGIN
 		PRINT '=========================================='
 	END CATCH
 END
-      
+GO
+
 EXEC bronze.load_bronze;
 
